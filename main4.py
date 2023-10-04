@@ -1,10 +1,7 @@
 import telegram.ext
 from pycoingecko import CoinGeckoAPI
 import pandas as pd
-with open("token.txt", 'r') as f:
-    token = f.read()
-    
-updater = telegram.ext.Updater(token)
+
   
 cg = CoinGeckoAPI()    
 def market_price():#def market_price(msg)
@@ -26,6 +23,11 @@ def massage_handler(update,context):
     Price = df_market.loc[msg][0]
     #Price = market_price(msg)
     update.message.reply_text(f"{msg}: {Price}$")
+
+with open("token.txt", 'r') as f:
+    token = f.read()
+    
+updater = telegram.ext.Updater(token)
 
 dp = updater.dispatcher
 dp.add_handler(telegram.ext.CommandHandler("start", start))
