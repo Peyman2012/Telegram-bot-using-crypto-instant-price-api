@@ -1,26 +1,28 @@
 import telegram.ext
 from pycoingecko import CoinGeckoAPI
 import pandas as pd
-with open("token.txt", 'r') as f:
-    token = f.read()
-    
-updater = telegram.ext.Updater(token)
 
-def start(update,context):
-    update.message.reply_text("Hi Welcome to CryptoLand")
+
+def start(bot,update):
+    bot.send_message(text="Hi Welcome to CryptoLand")
 def massage_handler(update,context):
     msg = update.message.text
     print(msg)
     
 cg = CoinGeckoAPI()    
-def Price(update,context):
+def Price(bot,update):
     
     data_market = cg.get_coins_markets(vs_currency = "usd")  
     df_market = pd.DataFrame(data_market,columns=["id","current_price"])
     df_market.set_index("id",inplace=True)   
     price = df_market.loc["bitcoin"][0]
-    update.message.reply_text(f"{price}")
+    bot.send_message(text=f"{price}")
 
+
+with open("token.txt", 'r') as f:
+    token = f.read()
+    
+updater = telegram.ext.Updater(token)
 
 
 dp = updater.dispatcher
