@@ -35,7 +35,8 @@ def list_coin(bot,update):
     df_market = market_price()
     bot.send_message(chat_id=update.message.chat_id, text=list(df_market.index))
 
-Token = '1226131623:uQiJSmRG7mwRsvj7Fc8iUWyuOkOy7eQ4qHC73KKl'
+with open("token.txt", 'r') as f:
+    Token = f.read()
 updater = Updater(token=Token, base_url="https://tapi.bale.ai/bot")
 
 dp = updater.dispatcher
